@@ -47,6 +47,14 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  def test_rendering_nested_component_in_a_controller
+    get "/controller_inline_nested"
+
+    assert_includes response.body, "<p>OuterComponent</p>"
+    assert_includes response.body, "<div>Add Inner template here</div>"
+    assert_response :success
+  end
+
   def test_template_changes_are_not_reflected_on_new_request_when_cache_template_loading_is_true
     # cache_template_loading is set to true on the initializer
 
@@ -190,6 +198,12 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     get "/rails/view_components/my_component/default"
 
     assert_includes response.body, "<div>hello,world!</div>"
+  end
+
+  def test_renders_nested_component_preview
+    get "/rails/view_components/nested_component/default"
+
+    assert_includes response.body, "<div>Add Inner template here</div>"
   end
 
   def test_renders_preview_component_default_preview

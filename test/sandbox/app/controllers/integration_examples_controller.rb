@@ -18,6 +18,12 @@ class IntegrationExamplesController < ActionController::Base
     end)
   end
 
+  def controller_inline_nested
+    render(OuterComponent.new) do |c|
+      c.button { render(InnerComponent.new) }
+    end
+  end
+
   def controller_inline_baseline
     render("integration_examples/_controller_inline", locals: { message: "bar" })
   end
